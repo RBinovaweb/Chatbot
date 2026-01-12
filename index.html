@@ -209,29 +209,30 @@ section{
 </div>
 
 <script>
-const openChat=document.getElementById('openChat');
-const chatbot=document.getElementById('chatbot');
-openChat.onclick=()=>{chatbot.style.display='block';openChat.style.display='none'}
-
 async function send(){
-  const input=document.getElementById('msg');
+  const input = document.getElementById("msg");
   if(!input.value) return;
 
-  const chat=document.getElementById('chat');
-  chat.innerHTML+=`<div class="msg user">${input.value}</div>`;
+  const chat = document.getElementById("chat");
+  chat.innerHTML += `<div class="msg user">${input.value}</div>`;
 
-  const response=await fetch("https://maxplay.railway.internal",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({message:input.value})
-  });
+  try {
+    const response = await fetch("https://SUA_URL_DO_RAILWAY/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: input.value })
+    });
 
-  const data=await response.json();
-  chat.innerHTML+=`<div class="msg bot">${data.reply}</div>`;
-  chat.scrollTop=chat.scrollHeight;
-  input.value="";
+    const data = await response.json();
+    chat.innerHTML += `<div class="msg bot">${data.reply}</div>`;
+  } catch (err) {
+    chat.innerHTML += `<div class="msg bot">⚠️ Erro de conexão.</div>`;
+  }
+
+  chat.scrollTop = chat.scrollHeight;
+  input.value = "";
 }
-</script>
+    </script>
 
 </body>
 </html>
