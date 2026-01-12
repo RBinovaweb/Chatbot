@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>MAXPLAY TV | TV por Assinatura Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#050508;
+  --card:#0f0f18;
+  --neon:#7b61ff;
+  --neon2:#00f5ff;
+  --text:#ffffff;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif}
+
+body{
+  background:linear-gradient(135deg,#050508,#0b0b1a);
+  color:var(--text);
+}
+
+header{
+  padding:40px 20px;
+  text-align:center;
+}
+header h1{
+  font-size:2.5em;
+  color:var(--neon);
+  text-shadow:0 0 20px rgba(123,97,255,.6);
+}
+header p{
+  margin-top:10px;
+  opacity:.9;
+}
+
+section{
+  padding:40px 20px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:15px;
+  padding:25px;
+  box-shadow:0 0 25px rgba(0,0,0,.6);
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 0 30px rgba(123,97,255,.4);
+}
+
+.card h3{
+  color:var(--neon2);
+  margin-bottom:10px;
+}
+
+.price{
+  font-size:2em;
+  color:#00ffae;
+  margin:10px 0;
+}
+
+.btn{
+  display:inline-block;
+  margin-top:15px;
+  padding:12px 20px;
+  background:linear-gradient(135deg,#25d366,#1ebea5);
+  color:#000;
+  border-radius:30px;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+/* CHATBOT */
+#chatbot{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:320px;
+  background:#0f0f18;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 0 30px rgba(0,0,0,.7);
+  display:none;
+  z-index:9999;
+}
+
+#chatbot header{
+  background:linear-gradient(135deg,#7b61ff,#00f5ff);
+  color:#000;
+  padding:10px;
+  font-weight:bold;
+  text-align:center;
+}
+
+#chat{
+  height:240px;
+  padding:10px;
+  overflow-y:auto;
+  font-size:14px;
+}
+
+.msg{margin-bottom:8px}
+.bot{color:#00f5ff}
+.user{color:#7b61ff;text-align:right}
+
+#input{
+  display:flex;
+}
+#input input{
+  flex:1;
+  padding:10px;
+  border:none;
+  outline:none;
+}
+#input button{
+  padding:10px;
+  border:none;
+  background:#25d366;
+  font-weight:bold;
+}
+
+#openChat{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#7b61ff;
+  padding:15px;
+  border-radius:50%;
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+  z-index:9998;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>MAXPLAY TV</h1>
+  <p>TV por Assinatura Premium • Filmes • Séries • Esportes • Adultos</p>
+  <a class="btn" href="https://wa.me/5527997974777" target="_blank">📲 WhatsApp 27 99797-4777</a>
+</header>
+
+<section>
+  <h2>📡 Nossos Serviços</h2><br>
+  <div class="cards">
+    <div class="card">
+      <h3>✔ Qualidade Máxima</h3>
+      <p>Canais HD, Full HD e 4K sem travamentos.</p>
+    </div>
+    <div class="card">
+      <h3>✔ Conteúdo Completo</h3>
+      <p>Filmes, séries, esportes, infantis e adultos.</p>
+    </div>
+    <div class="card">
+      <h3>✔ Compatibilidade</h3>
+      <p>Smart TV, TV Box, Android, PC e celular.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>💰 Planos</h2><br>
+  <div class="cards">
+    <div class="card">
+      <h3>Mensal</h3>
+      <div class="price">R$ 30</div>
+      <p>Acesso completo por 30 dias.</p>
+      <a class="btn" href="https://wa.me/5527997974777">Assinar</a>
+    </div>
+    <div class="card">
+      <h3>Trimestral</h3>
+      <div class="price">R$ 80</div>
+      <p>Mais economia.</p>
+      <a class="btn" href="https://wa.me/5527997974777">Assinar</a>
+    </div>
+    <div class="card">
+      <h3>Anual</h3>
+      <div class="price">R$ 280</div>
+      <p>Melhor custo-benefício.</p>
+      <a class="btn" href="https://wa.me/5527997974777">Assinar</a>
+    </div>
+  </div>
+</section>
+
+<div id="openChat">💬</div>
+
+<div id="chatbot">
+  <header>Atendimento MAXPLAY</header>
+  <div id="chat">
+    <div class="msg bot">Olá 👋 Sou o assistente virtual da MAXPLAY TV. Como posso ajudar?</div>
+  </div>
+  <div id="input">
+    <input id="msg" placeholder="Digite sua dúvida...">
+    <button onclick="send()">➤</button>
+  </div>
+</div>
+
+<script>
+const openChat=document.getElementById('openChat');
+const chatbot=document.getElementById('chatbot');
+openChat.onclick=()=>{chatbot.style.display='block';openChat.style.display='none'}
+
+async function send(){
+  const input=document.getElementById('msg');
+  if(!input.value) return;
+
+  const chat=document.getElementById('chat');
+  chat.innerHTML+=`<div class="msg user">${input.value}</div>`;
+
+  const response=await fetch("COLE_AQUI_URL_DO_BACKEND/chat",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({message:input.value})
+  });
+
+  const data=await response.json();
+  chat.innerHTML+=`<div class="msg bot">${data.reply}</div>`;
+  chat.scrollTop=chat.scrollHeight;
+  input.value="";
+}
+</script>
+
+</body>
+</html>
